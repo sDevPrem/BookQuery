@@ -15,11 +15,12 @@
         android:theme="@style/Theme.BookQuery">
         <activity
             android:name=".bookInfo.BookInfoActivity"
+            android:label="Search Books"
             android:exported="false" />
         <activity
             android:name=".searchPage.SearchActivity"
+            android:label="Book Info"
             android:exported="true">
-            <!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
