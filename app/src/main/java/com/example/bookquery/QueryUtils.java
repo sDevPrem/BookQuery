@@ -12,8 +12,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
-import androidx.core.content.res.ResourcesCompat;
-
 import com.example.bookquery.bookInfo.FullBookInfo;
 import com.example.bookquery.searchPage.SearchResult;
 import com.example.bookquery.searchPage.ShortBookInfo;
@@ -258,23 +256,34 @@ final public class QueryUtils {
 
     //Get the thumbnail of the book and set the thumbnail to the corresponding imageView of the BookInfo object
     //also store it in the object for later use
-    static public class SetImage extends AsyncTask<String, Void, Bitmap> {
-        BookInfo mBookInfo;
-        ImageView imageView;
-        Context context;
+    static public class SetImage extends AsyncTask<SetImage.BookWithImage, Void, SetImage.ImageViewWithBitmap> {
 
-        public SetImage(BookInfo bookInfo, ImageView imageView, Context context) {
-            this.mBookInfo = bookInfo;
-            this.imageView = imageView;
-            this.context = context;
+        static public class BookWithImage {
+            private final BookInfo mBookInfo;
+            private final ImageView imageView;
+
+            public BookWithImage(BookInfo bookInfo, ImageView imageView) {
+                mBookInfo = bookInfo;
+                this.imageView = imageView;
+            }
+        }
+
+        private static class ImageViewWithBitmap {
+            private final ImageView mImageView;
+            private final Bitmap mBitmap;
+
+            public ImageViewWithBitmap(ImageView imageView, Bitmap bitmap) {
+                mImageView = imageView;
+                mBitmap = bitmap;
+            }
+
         }
 
         @Override
-        protected Bitmap doInBackground(String... urls) {
-            String urlDisplay = urls[0];
-            if (urlDisplay.length() < 1) {
-                return drawableToBitmap(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_baseline_book_24, null));
-            }
+        protected ImageViewWithBitmap doInBackground(BookWithImage... books) {
+            String urlDisplay = books[0].mBookInfo.getThumbUrl();
+            if (urlDisplay.length() == 0)
+                return null;
             Bitmap mIcon11 = null;
             try {
                 InputStream in = new java.net.URL(urlDisplay).openStream();
@@ -283,13 +292,15 @@ final public class QueryUtils {
                 Log.e("Error", e.getMessage() + " " + urlDisplay);
                 e.printStackTrace();
             }
-            return mIcon11;
+            books[0].mBookInfo.setThumbBitmap(mIcon11);
+            return new ImageViewWithBitmap(books[0].imageView, mIcon11);
         }
 
         @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            mBookInfo.setThumbBitmap(bitmap);
-            imageView.setImageBitmap(bitmap);
+        protected void onPostExecute(ImageViewWithBitmap item) {
+            if (item == null || item.mBitmap == null)
+                return;
+            item.mImageView.setImageBitmap(item.mBitmap);
         }
 
         public Bitmap drawableToBitmap(Drawable drawable) {

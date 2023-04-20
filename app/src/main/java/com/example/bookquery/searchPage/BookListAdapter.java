@@ -19,6 +19,7 @@ import java.util.List;
 
 public class BookListAdapter extends ArrayAdapter<ShortBookInfo> {
     Context mContext;
+    private final QueryUtils.SetImage mSetImage = new QueryUtils.SetImage();
     ArrayList<ShortBookInfo> mShortBookInfoList;
 
     public BookListAdapter(@NonNull Context context, int resource, @NonNull List<ShortBookInfo> objects) {
@@ -72,8 +73,8 @@ public class BookListAdapter extends ArrayAdapter<ShortBookInfo> {
     private void setImage(int position, ShortBookInfo bookInfo, ImageView img) {
         //if object doesn't have thumbnail image then get the thumbnail of the book
         //else set the thumbnail to the thumbnail imageView
-        if (bookInfo.getThumbBitmap() == null) {
-            new QueryUtils.SetImage(bookInfo, img, getContext()).execute(bookInfo.getThumbUrl());
+        if (bookInfo.getThumbBitmap() == null && bookInfo.getThumbUrl() != null || bookInfo.getThumbUrl().length() > 1) {
+            new QueryUtils.SetImage().execute(new QueryUtils.SetImage.BookWithImage(bookInfo, img));
         } else if (bookInfo.getThumbBitmap() != null) {
             img.setImageBitmap(bookInfo.getThumbBitmap());
         }

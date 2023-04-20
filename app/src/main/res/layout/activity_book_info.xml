@@ -43,7 +43,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="0dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/ic_baseline_book_24" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

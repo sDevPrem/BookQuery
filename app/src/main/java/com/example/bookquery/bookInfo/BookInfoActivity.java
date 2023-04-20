@@ -117,10 +117,12 @@ public class BookInfoActivity extends AppCompatActivity implements LoaderManager
             avgRating.setText(String.valueOf(bookInfo.avgRating));
             ratingsCount.setText(String.valueOf(bookInfo.ratingsCount));
         }
-        if (bookInfo.getThumbBitmap() == null)
-            new QueryUtils.SetImage(bookInfo, ((ImageView) findViewById(R.id.book_img)), this).execute(bookInfo.getThumbUrl());
-        else
+
+        if (bookInfo.getThumbBitmap() == null && bookInfo.getThumbUrl() != null || bookInfo.getThumbUrl().length() > 1)
+            new QueryUtils.SetImage().execute(new QueryUtils.SetImage.BookWithImage(bookInfo, (ImageView) findViewById(R.id.book_img)));
+        else if (bookInfo.getThumbBitmap() != null)
             ((ImageView) findViewById(R.id.book_img)).setImageBitmap(bookInfo.getThumbBitmap());
+
         emptyLayout.setVisibility(View.GONE);
         bookInfoLayout.setVisibility(View.VISIBLE);
     }
