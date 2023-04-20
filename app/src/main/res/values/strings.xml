@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Book Query</string>
+    <string name="no_books">No Books Found</string>
+    <string name="no_connection">No Connection</string>
+    <string name="retry">Retry</string>
+    <string name="more_books">More Books</string>
+    <string name="FullBookInfoError">There is some problem while Loading</string>
+    <string name="no_rating">No</string>
+    <string name="not_categorised">Not categorised</string>
+
+</resources>
