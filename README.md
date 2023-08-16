@@ -6,7 +6,7 @@ The app uses google books API to get books and their details and uses Android Lo
 
 ## Screenshots
 
-| ![search_page_screenshot](screenshot/screenshot_search_page.png) | ![search_page_screenshot](screenshot/screenshot_details_page.png) |
-|------------------------------------------------------------------|-------------------------------------------------------------------|
+| ![screenshot_search_page](https://github.com/sDevPrem/BookQuery/assets/130966261/8c0c85f6-56b1-4a40-ad0a-cdaa5dd5fd87) | ![screenshot_details_page](https://github.com/sDevPrem/BookQuery/assets/130966261/0c9abe1f-db29-411d-af0d-83309c2cba3f) |
+|------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
 
 The first activity contains a search bar and a ListView. The second one is a details activity that displays more info about the selected book.
